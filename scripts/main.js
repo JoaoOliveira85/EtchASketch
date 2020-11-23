@@ -6,6 +6,8 @@ const colorSubmit = document.getElementById("colorSubmit");
 
 let isRendered = false;
 
+// generates random triplet (between 0-255) to be used as RGB color value. Returns string with triplet.
+
 function generateColor(){
     const red = Math.floor(Math.random() * 255)
     const green = Math.floor(Math.random() * 255);
@@ -13,6 +15,8 @@ function generateColor(){
     return `${red}, ${green}, ${blue}`;
 }
 
+
+// creates X (input int numberOfDivs) number of <div> elements in html document. returns nothing.
 function drawDivs(numberOfDivs){
     if (!isRendered) {
         for (let i = 0; i < numberOfDivs; i++){
@@ -35,11 +39,16 @@ function drawDivs(numberOfDivs){
     }
 }
 
+// eventListners for various buttons
+
 sizeSubmit.addEventListener("click", () => {
     drawDivs(parseInt(sizeInput.value));
+    choseColors();
 });
 
-colorSubmit.addEventListener("click", () => {
+colorSubmit.addEventListener("click", () => choseColors())
+
+function choseColors() {
     if (document.getElementById("colorRed").checked){
         paintColors("red");
     } else if (document.getElementById("colorGreen").checked) {
@@ -49,7 +58,9 @@ colorSubmit.addEventListener("click", () => {
     } else if (document.getElementById("colorRainbow").checked) {
         paintColors("rainbow");
     }
-})
+}
+
+// function to define which colors will be used as backgroundColor for each cell. Takes string input to select color (colorToPaint). returns nothing.
 
 function paintColors(colorToPaint){
     const divList = document.getElementsByClassName("cells");
@@ -87,3 +98,6 @@ function paintColors(colorToPaint){
 }
 
 
+// default state on page load
+drawDivs(parseInt(sizeInput.value));
+choseColors();
