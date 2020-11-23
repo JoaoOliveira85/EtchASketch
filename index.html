@@ -15,13 +15,16 @@
                     <input id="sizeInput" type="number" min=2 max=100 value=16>
                 </label>
                 <button id="sizeSubmit" type="button" onsubmit="return false">Render</button><br>
-                <label>Cell Color:<br>
-                    <input type="radio">Red</input><br>
-                    <input type="radio">Green</input><br>
-                    <input type="radio">Blue</input><br>
-                    <input type="radio" checked="checked">Rainbow</input><br>
                 </label>
             </form>
+            <label>Cell Color:<br>
+                <form>
+                    <input type="radio" id="colorRed" name="colors">Red</input><br>
+                    <input type="radio" id="colorGreen" name="colors">Green</input><br>
+                    <input type="radio" id="colorBlue" name="colors">Blue</input><br>
+                    <input type="radio" id="colorRainbow" name="colors">Rainbow</input>
+                </form>
+                <button type="submit" id="colorSubmit" onsubmit="return false">Change color!</button>
         </div>
         <div id="renderWindow">
             <div id="gameGrid"></div>

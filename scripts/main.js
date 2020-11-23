@@ -2,6 +2,7 @@ const gameWindow = document.getElementById("renderWindow");
 const gameGrid = document.getElementById("gameGrid");
 const sizeInput = document.getElementById("sizeInput");
 const sizeSubmit = document.getElementById("sizeSubmit");
+const colorSubmit = document.getElementById("colorSubmit");
 
 let isRendered = false;
 
@@ -32,18 +33,57 @@ function drawDivs(numberOfDivs){
         isRendered = false;
         drawDivs(parseInt(sizeInput.value));
     }
-    const divList = document.getElementsByClassName("cells");
-    for (let i = 0; i < divList.length; i++) {
-        divList[i].addEventListener("mouseover", () => {
-            divList[i].style.backgroundColor = `rgb(${generateColor()})`; 
-        })
-    }
 }
 
 sizeSubmit.addEventListener("click", () => {
     drawDivs(parseInt(sizeInput.value));
 });
 
+colorSubmit.addEventListener("click", () => {
+    if (document.getElementById("colorRed").checked){
+        paintColors("red");
+    } else if (document.getElementById("colorGreen").checked) {
+        paintColors("green");
+    } else if (document.getElementById("colorBlue").checked) {
+        paintColors("blue");
+    } else if (document.getElementById("colorRainbow").checked) {
+        paintColors("rainbow");
+    }
+})
 
+function paintColors(colorToPaint){
+    const divList = document.getElementsByClassName("cells");
+    switch (colorToPaint) {
+        case "red":
+            for (let i = 0; i < divList.length; i++) {
+                divList[i].addEventListener("mouseover", () => {
+                    divList[i].style.backgroundColor = "red"; 
+                });
+            }
+            break;
+        case "green":
+            for (let i = 0; i < divList.length; i++) {
+                divList[i].addEventListener("mouseover", () => {
+                    divList[i].style.backgroundColor = "green"; 
+                });
+            }
+            break;
+        case "blue":
+            for (let i = 0; i < divList.length; i++) {
+                divList[i].addEventListener("mouseover", () => {
+                    divList[i].style.backgroundColor = "blue"; 
+                });
+            }
+            break;
+        case "rainbow":
+            for (let i = 0; i < divList.length; i++) {
+                divList[i].addEventListener("mouseover", () => {
+                    divList[i].style.backgroundColor = `rgb(${generateColor()})`; 
+                });
+            }
+            break;
+    }
+    
+}
 
 
