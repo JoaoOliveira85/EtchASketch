@@ -7,13 +7,20 @@
     <title>Etch-A-Sketch</title>
 </head>
 <body>
+    <h1>Etch-A-Sketch 2000!</h1>
     <div id="gameWindow">
         <div id="gameMenu">
             <form id="render">
                 <label>Number of Rows/Collumns: 
                     <input id="sizeInput" type="number" min=2 max=100 value=16>
                 </label>
-                <button id="sizeSubmit" type="button" onsubmit="return false">Render</button>
+                <button id="sizeSubmit" type="button" onsubmit="return false">Render</button><br>
+                <label>Cell Color:<br>
+                    <input type="radio">Red</input><br>
+                    <input type="radio">Green</input><br>
+                    <input type="radio">Blue</input><br>
+                    <input type="radio" checked="checked">Rainbow</input><br>
+                </label>
             </form>
         </div>
         <div id="renderWindow">
