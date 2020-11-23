@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link href="styles/styles.css" rel="stylesheet"></link>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch-A-Sketch</title>
+</head>
+<body>
+    <div id="gameWindow">
+        <div id="gameMenu">
+            <form id="render">
+                <label>Number of Rows/Collumns: 
+                    <input id="sizeInput" type="number" min=2 max=100 value=16>
+                </label>
+                <button id="sizeSubmit" type="button" onsubmit="return false">Render</button>
+            </form>
+        </div>
+        <div id="renderWindow">
+            <div id="gameGrid"></div>
+        </div>
+    </div>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
