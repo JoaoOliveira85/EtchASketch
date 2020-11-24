@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
+
 body {
     background-image: url(/media/background.png);
 }
 
 #gameWindow {
     display: grid;
+    grid-template-areas: "gameMenu gameGrid";
     grid-template-columns: 2fr 3fr;
 }
 
@@ -14,6 +17,7 @@ body {
     padding: 10px;
     border-radius: 5px;
     width: 100%;
+    box-shadow: 8px 8px 15px black;
 }
 
 #gameGrid {
@@ -21,18 +25,17 @@ body {
     margin: 5px;
     position: absolute;
     right: 20px;
-    width: 85vh;
-    height: 85vh;
+    width: 80vh;
+    height: 80vh;
     border: 5px solid black;
     background-color: white;
-    box-shadow: 15px 15px 20px black;
+    box-shadow: 8px 8px 15px black;
 }
 
 .cells {
     background-color: white;
     border: 1px solid black;
-    /* width: 16px; */
-    /* height: 16px; */
+    transition: 300ms;
 }
 
 .cells:hover {
@@ -40,25 +43,43 @@ body {
     background-color: black;
     box-shadow: 0px 0px 10px black;
     z-index: 5000;
+    transition: 300ms;
 }
 
-h1 {
+#title {
+    font-family: "Nerko One";
+    font-size: 60px;
     text-align: center;
     color: white;
     text-shadow: 5px 5px 10px black;
+    -webkit-text-stroke: 2px;
+    -webkit-text-stroke-color: black;
 }
 
-@media (max-width: 650px) {
+#renderColor {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 10px;
+    border: solid black 2px;
+}
+
+@media (max-width: 1250px) {
+    #gameMenu {
+        width: 90vw;
+    }
+
     #gameWindow {
         display: grid;
-        background-color: red;
-        grid-template-rows: 1fr 2fr;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 3fr;
+        grid-template-areas: "gameMenu"
+        "gameGrid";
     }
 
     #gameGrid {
         position: relative;
         left: 0px;
-        width: 50vh;
-        height: 50vh;
+        width: 60vh;
+        height: 60vh;
     }
 }

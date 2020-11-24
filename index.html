@@ -7,11 +7,11 @@
     <title>Etch-A-Sketch</title>
 </head>
 <body>
-    <h1>Etch-A-Sketch 2000!</h1>
+    <h1 id="title">Etch-A-Sketch 2000!</h1>
     <div id="gameWindow">
         <div id="gameMenu">
             <form id="render">
-                <label>Number of Rows/Collumns: 
+                <label>Number of Rows/Collumns: <br>
                     <input id="sizeInput" type="number" min=2 max=100 value=16>
                 </label>
                 <button id="sizeSubmit" type="button" onsubmit="return false">Render</button><br>
@@ -22,9 +22,22 @@
                     <input type="radio" id="colorRed" name="colors">Red</input><br>
                     <input type="radio" id="colorGreen" name="colors">Green</input><br>
                     <input type="radio" id="colorBlue" name="colors">Blue</input><br>
-                    <input type="radio" id="colorRainbow" name="colors" checked="checked">Rainbow</input>
+                    <input type="radio" id="colorRainbow" name="colors" checked="checked">Rainbow</input><br>
+                    <input type="radio" id="colorCustom" name="colors">Custom color</input>
                 </form>
+                <div>
+                    <div>red: <input type="number" id="redValue" min=0 max=255 value=1></div>
+                    <div>green: <input type="number" id="greenValue" min=0 max=255 value=1></div>
+                    <div>blue: <input type="number" id="blueValue" min=0 max=255 value=1></div>
+                    <p>Color Preview:</p>
+                    <div id="renderColor"></div>
+                </div>
                 <button type="submit" id="colorSubmit" onsubmit="return false">Change color!</button>
+                <form>
+                    <input type="radio" id="hoverRender" name="renderType" checked="checked">Render on Mouse Hover</input><br>
+                    <input type="radio" id="clickRender" name="renderType">Render on Mouse Click</input><br>
+                    <input type="radio" id="clickHoverRender" name="renderType">Render on Mouse Click and Hover</input><br>
+                </form>
         </div>
         <div id="renderWindow">
             <div id="gameGrid"></div>

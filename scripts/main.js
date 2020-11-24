@@ -18,24 +18,26 @@ function generateColor(){
 
 // creates X (input int numberOfDivs) number of <div> elements in html document. returns nothing.
 function drawDivs(numberOfDivs){
-    if (!isRendered) {
-        for (let i = 0; i < numberOfDivs; i++){
-            for (let j = 0; j < numberOfDivs; j++){
-                let cells = document.createElement("div");
-                cells.id = `row${i + 1}, collumn${j + 1}`;
-                cells.className = "cells";
-                gameGrid.appendChild(cells);
+    if (numberOfDivs >= 1 && numberOfDivs <= 100){
+        if (!isRendered) {
+            for (let i = 0; i < numberOfDivs; i++){
+                for (let j = 0; j < numberOfDivs; j++){
+                    let cells = document.createElement("div");
+                    cells.id = `row${i + 1}, collumn${j + 1}`;
+                    cells.className = "cells";
+                    gameGrid.appendChild(cells);
+                }
             }
+            gameGrid.style.gridTemplateColumns = `repeat(${numberOfDivs}, 1fr)`
+            isRendered = true;
+        } else {
+            while (gameGrid.firstChild) {
+                gameGrid.removeChild(gameGrid.lastChild)   
+            }
+            gameGrid.style.gridTemplateColumns = '';
+            isRendered = false;
+            drawDivs(parseInt(sizeInput.value));
         }
-        gameGrid.style.gridTemplateColumns = `repeat(${numberOfDivs}, 1fr)`
-        isRendered = true;
-    } else {
-        while (gameGrid.firstChild) {
-            gameGrid.removeChild(gameGrid.lastChild)   
-        }
-        gameGrid.style.gridTemplateColumns = '';
-        isRendered = false;
-        drawDivs(parseInt(sizeInput.value));
     }
 }
 
@@ -57,6 +59,11 @@ function choseColors() {
         paintColors("blue");
     } else if (document.getElementById("colorRainbow").checked) {
         paintColors("rainbow");
+    } else if (document.getElementById("colorCustom").checked) {
+        let redValue = document.getElementById("redValue").value;
+        let greenValue = document.getElementById("greenValue").value;
+        let blueValue = document.getElementById("blueValue").value;
+        paintColors(`rgb(${redValue}, ${greenValue}, ${blueValue})`);
     }
 }
 
@@ -66,6 +73,7 @@ function paintColors(colorToPaint){
     const divList = document.getElementsByClassName("cells");
     switch (colorToPaint) {
         case "red":
+            document.getElementById("renderColor").style.background="red";
             for (let i = 0; i < divList.length; i++) {
                 divList[i].addEventListener("mouseover", () => {
                     divList[i].style.backgroundColor = "red"; 
@@ -73,6 +81,7 @@ function paintColors(colorToPaint){
             }
             break;
         case "green":
+            document.getElementById("renderColor").style.background="green";
             for (let i = 0; i < divList.length; i++) {
                 divList[i].addEventListener("mouseover", () => {
                     divList[i].style.backgroundColor = "green"; 
@@ -80,6 +89,7 @@ function paintColors(colorToPaint){
             }
             break;
         case "blue":
+            document.getElementById("renderColor").style.background="blue";
             for (let i = 0; i < divList.length; i++) {
                 divList[i].addEventListener("mouseover", () => {
                     divList[i].style.backgroundColor = "blue"; 
@@ -87,15 +97,43 @@ function paintColors(colorToPaint){
             }
             break;
         case "rainbow":
+            document.getElementById("renderColor").style.background="linear-gradient(45deg, rgba(180,58,58,1) 0%, rgba(198,196,51,1) 18%, rgba(39,227,64,1) 35%, rgba(65,175,168,1) 52%, rgba(100,102,228,1) 66%, rgba(176,139,175,1) 83%, rgba(252,69,69,1) 100%)";
             for (let i = 0; i < divList.length; i++) {
                 divList[i].addEventListener("mouseover", () => {
                     divList[i].style.backgroundColor = `rgb(${generateColor()})`; 
+                });
+            }
+        default:
+            document.getElementById("renderColor").style.background=colorToPaint;
+            for (let i = 0; i < divList.length; i++) {
+                divList[i].addEventListener("mouseover", () => {
+                    divList[i].style.backgroundColor = colorToPaint;
+                    document.getElementById("renderColor").style.backgroundColor=colorToPaint; 
                 });
             }
             break;
     }
     
 }
+
+// function previewColor(colorToPaint){
+//     switch (colorToPaint) {
+//         case "red":
+//             document.getElementById("renderColor").style.backgroundColor="red";
+//             break;
+//         case "green":
+//             document.getElementById("renderColor").style.backgroundColor="green";
+//             break;
+//         case "blue":
+//             document.getElementById("renderColor").style.backgroundColor="blue";
+//             break;
+//         case "rainbow":
+//             document.getElementById("renderColor").style.background="linear-gradient(90deg, rgba(180,58,58,1) 0%, rgba(198,196,51,1) 18%, rgba(39,227,64,1) 35%, rgba(65,175,168,1) 52%, rgba(100,102,228,1) 66%, rgba(176,139,175,1) 83%, rgba(252,69,69,1) 100%);"; 
+//         default:
+//             document.getElementById("renderColor").style.backgroundColor=colorToPaint;
+//             break;
+//     }
+// }
 
 
 // default state on page load
