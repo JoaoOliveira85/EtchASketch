@@ -5,28 +5,34 @@ body {
 }
 
 #gameWindow {
-    display: grid;
-    grid-template-areas: "gameMenu gameGrid";
-    grid-template-columns: 2fr 3fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
 
 #gameMenu {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 10px;
     border-radius: 5px;
     width: 100%;
     box-shadow: 8px 8px 15px black;
+    position: absolute;
+    z-index: 10000;
+    width: 75vh;
+    height: 75vh;
+    max-height: fit-content;
+    max-width: 75vw;
 }
 
 #gameGrid {
     display: grid;
     margin: 5px;
-    position: absolute;
-    right: 20px;
-    width: 80vh;
-    height: 80vh;
+    width: 75vh;
+    height: 75vh;
+    max-height: 75vw;
+    max-width: 75vw;
     border: 5px solid black;
     background-color: white;
     box-shadow: 8px 8px 15px black;
@@ -54,7 +60,12 @@ body {
     text-shadow: 5px 5px 10px black;
     -webkit-text-stroke: 2px;
     -webkit-text-stroke-color: black;
+    margin: 0;
 }
+
+/* #titleBar {
+    padding: 50px;
+} */
 
 #renderColor {
     width: 25px;
@@ -63,7 +74,7 @@ body {
     border: solid black 2px;
 }
 
-@media (max-width: 1250px) {
+/* @media (max-width: 1250px) {
     #gameMenu {
         width: 90vw;
     }
@@ -81,5 +92,5 @@ body {
         left: 0px;
         width: 60vh;
         height: 60vh;
-    }
+    } */
 }
