@@ -1,13 +1,8 @@
-const gameWindow = document.getElementById("renderWindow");
-const gameGrid = document.getElementById("gameGrid");
-const sizeInput = document.getElementById("sizeInput");
-const sizeSubmit = document.getElementById("sizeSubmit");
-const colorSubmit = document.getElementById("colorSubmit");
-const settingsButton = document.getElementById("settings");
+// Button to open/close settings menu
 
 document.getElementById("gameMenu").style.display = "none";
 let isVisible = false;
-
+const settingsButton = document.getElementById("settings");
 settingsButton.addEventListener("click", () => {
     if (isVisible){
         document.getElementById("gameMenu").style.display = "none";
@@ -32,6 +27,7 @@ function generateColor(){
 
 // creates X (input int numberOfDivs) number of <div> elements in html document. returns nothing.
 function drawDivs(numberOfDivs){
+    const gameGrid = document.getElementById("gameGrid")
     // Evalute if the grid table is too large (or too small) to be rendered
     if (!(numberOfDivs >= 1) || !(numberOfDivs <= 100)){
         return;
@@ -87,9 +83,19 @@ function chooseColors() {
     } else if (document.getElementById("colorRainbow").checked) {
         paintColors("rainbow");
     } else if (document.getElementById("colorCustom").checked) {
+        // ! is accepting input out of expected range! 
         let redValue = document.getElementById("redValue").value;
+        if (redValue < 0 || redValue > 255) {
+            console.error("Red value out of bounds (0-255)")
+        }
         let greenValue = document.getElementById("greenValue").value;
+        if (greenValue < 0 || greenValue > 255) {
+            console.error("Green value out of bounds (0-255)")
+        }
         let blueValue = document.getElementById("blueValue").value;
+        if (blueValue < 0 || blueValue > 255) {
+            console.error("Blue value out of bounds (0-255)")
+        }
         paintColors(`rgb(${redValue}, ${greenValue}, ${blueValue})`);
     }
 }
@@ -100,48 +106,73 @@ function paintColors(colorToPaint){
     const divList = document.getElementsByClassName("cells");
     switch (colorToPaint) {
         case "red":
-            document.getElementById("renderColor").style.background="red";
-            for (let i = 0; i < divList.length; i++) {
-                divList[i].addEventListener("mouseover", () => {
-                    divList[i].style.backgroundColor = "red";
-                });
-            }
+            changeColorInDiv(divList, "red", handlerType());
             break;
         case "green":
-            document.getElementById("renderColor").style.background="green";
-            for (let i = 0; i < divList.length; i++) {
-                divList[i].addEventListener("mouseover", () => {
-                    divList[i].style.backgroundColor = "green";
-                });
-            }
+            changeColorInDiv(divList, "green", handlerType());
             break;
         case "blue":
-            document.getElementById("renderColor").style.background="blue";
-            for (let i = 0; i < divList.length; i++) {
-                divList[i].addEventListener("mouseover", () => {
-                    divList[i].style.backgroundColor = "blue";
-                });
-            }
+            changeColorInDiv(divList, "blue", handlerType());
             break;
         case "rainbow":
-            document.getElementById("renderColor").style.background="linear-gradient(45deg, rgba(180,58,58,1) 0%, rgba(198,196,51,1) 18%, rgba(39,227,64,1) 35%, rgba(65,175,168,1) 52%, rgba(100,102,228,1) 66%, rgba(176,139,175,1) 83%, rgba(252,69,69,1) 100%)";
-            for (let i = 0; i < divList.length; i++) {
-                divList[i].addEventListener("mouseover", () => {
-                    divList[i].style.backgroundColor = `rgb(${generateColor()})`;
-                });
-            }
+            changeColorInDiv(divList, "rainbow", handlerType());
+            break;
         default:
-            document.getElementById("renderColor").style.background=colorToPaint;
-            for (let i = 0; i < divList.length; i++) {
-                divList[i].addEventListener("mouseover", () => {
-                    divList[i].style.backgroundColor = colorToPaint;
-                    document.getElementById("renderColor").style.backgroundColor=colorToPaint;
-                });
-            }
+            changeColorInDiv(divList, colorToPaint, handlerType());
             break;
     }
-
 }
+
+// defines which color will be applied to each cell and which type of event listner to listen to. takes nodelist, string, string. returns nothing.
+
+function changeColorInDiv(listOfCells, color, eventType){
+    if (color === "rainbow") {
+        document.documentElement.style.setProperty('--activeColor',"linear-gradient(45deg, rgba(180,58,58,1) 0%, rgba(198,196,51,1) 18%, rgba(39,227,64,1) 35%, rgba(65,175,168,1) 52%, rgba(100,102,228,1) 66%, rgba(176,139,175,1) 83%, rgba(252,69,69,1) 100%)");
+        for (let i = 0; i < listOfCells.length; i++) {
+            listOfCells[i].addEventListener(eventType, () => {
+                color = `rgb(${generateColor()})`
+                document.documentElement.style.setProperty('--activeColor', color);
+                listOfCells[i].style.backgroundColor = color;
+            });
+        }
+    } else if (color === "red" || color === "green" || color === "blue") {
+        // document.getElementById("renderColor").style.background=color;
+        document.documentElement.style.setProperty('--activeColor', color);
+        for (let i = 0; i < listOfCells.length; i++) {
+            listOfCells[i].addEventListener(eventType, () => {
+                listOfCells[i].style.backgroundColor = color;
+            });
+        } 
+    } else {
+        // document.getElementById("renderColor").style.background=color;
+        document.documentElement.style.setProperty('--activeColor', color);
+        for (let i = 0; i < listOfCells.length; i++) {
+            listOfCells[i].addEventListener(eventType, () => {
+                listOfCells[i].style.backgroundColor = color;
+
+            });
+        }
+    }
+}
+
+// removes all previous eventhandlers and adds new ones defined in settings. returns string with handler to be used by other function.
+function handlerType() {
+    const oldGrid = document.getElementById("gameGrid");
+    const newGrid = oldGrid.cloneNode(true);
+    document.getElementById("renderWindow").replaceChild(newGrid, oldGrid);
+    if (document.getElementById("hoverRender").checked) {
+        return "mouseover";
+    } else if (document.getElementById("clickRender").checked) {
+        return "click";
+    // TODO: Add an option to paint cells with click/drag
+    // } else if (document.getElementById("clickHoverRender").checked) {
+    //     return "clickHover";
+    } else {
+        console.error("unexpected handler type!")
+    }
+}
+
+
 
 // default state on page load
 drawDivs(parseInt(sizeInput.value));
