@@ -128,14 +128,15 @@ function paintColors(colorToPaint){
 function changeColorInDiv(listOfCells, color, eventType){
     if (color === "rainbow") {
         document.documentElement.style.setProperty('--activeColor',"linear-gradient(45deg, rgba(180,58,58,1) 0%, rgba(198,196,51,1) 18%, rgba(39,227,64,1) 35%, rgba(65,175,168,1) 52%, rgba(100,102,228,1) 66%, rgba(176,139,175,1) 83%, rgba(252,69,69,1) 100%)");
+        color = `rgb(${generateColor()})` // Generate a random color for the first paint
         for (let i = 0; i < listOfCells.length; i++) {
             listOfCells[i].addEventListener(eventType, () => {
-                color = `rgb(${generateColor()})`
-                document.documentElement.style.setProperty('--activeColor', color);
                 listOfCells[i].style.backgroundColor = color;
+                color = `rgb(${generateColor()})` // Create a new random color for the next paint
+                document.documentElement.style.setProperty('--activeColor', color); // SHow next random color in preview
             });
         }
-    } else if (color === "red" || color === "green" || color === "blue") {
+    } else {
         // document.getElementById("renderColor").style.background=color;
         document.documentElement.style.setProperty('--activeColor', color);
         for (let i = 0; i < listOfCells.length; i++) {
@@ -143,16 +144,16 @@ function changeColorInDiv(listOfCells, color, eventType){
                 listOfCells[i].style.backgroundColor = color;
             });
         } 
-    } else {
-        // document.getElementById("renderColor").style.background=color;
-        document.documentElement.style.setProperty('--activeColor', color);
-        for (let i = 0; i < listOfCells.length; i++) {
-            listOfCells[i].addEventListener(eventType, () => {
-                listOfCells[i].style.backgroundColor = color;
-
-            });
-        }
     }
+    // else {
+    //     // document.getElementById("renderColor").style.background=color;
+    //     document.documentElement.style.setProperty('--activeColor', color);
+    //     for (let i = 0; i < listOfCells.length; i++) {
+    //         listOfCells[i].addEventListener(eventType, () => {
+    //             listOfCells[i].style.backgroundColor = color;
+    //         });
+    //     }
+    // }
 }
 
 // removes all previous eventhandlers and adds new ones defined in settings. returns string with handler to be used by other function.
